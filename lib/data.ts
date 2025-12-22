@@ -54,6 +54,12 @@ export const mockServices = [
     { id: 3, title: "Montaje de PCs", user: "David G.", location: "Bezana", price: "50€", description: "Asesoramiento y montaje de equipos gaming." }
 ];
 
+export interface Category {
+    id: number;
+    name: string;
+    slug: string;
+}
+
 export interface Product {
     id: number;
     title: string;
@@ -61,15 +67,25 @@ export interface Product {
     price: number;
     originalPrice?: number;
     image: string;
-    category: "Ordenador" | "Móvil" | "Consola" | "Accesorio";
+    categoryId: number; // reference to Category.id
+    sku: string;
+    stock: number;
+    brand?: string;
     status: "Disponible" | "Vendido";
 }
 
+export const mockCategories: Category[] = [
+    { id: 1, name: "Móvil", slug: "movil" },
+    { id: 2, name: "Ordenador", slug: "ordenador" },
+    { id: 3, name: "Consola", slug: "consola" },
+    { id: 4, name: "Accesorio", slug: "accesorio" }
+];
+
 export const mockProducts: Product[] = [
-    { id: 1, title: "iPhone 11 64GB - Reacondicionado", description: "Batería al 100%. Cristal impoluto. Incluye cargador.", price: 299, originalPrice: 350, image: "iphone", category: "Móvil", status: "Disponible" },
-    { id: 2, title: "Portátil Gaming HP Omen", description: "i7 10th Gen, 16GB RAM, RTX 2060. Perfecto estado.", price: 650, originalPrice: 899, image: "laptop", category: "Ordenador", status: "Disponible" },
-    { id: 3, title: "PS4 Slim 500GB + Mando", description: "Limpieza interna recién hecha. Pasta térmica cambiada.", price: 180, originalPrice: 220, image: "console", category: "Consola", status: "Disponible" },
-    { id: 4, title: "Monitor Dell 24' IPS", description: "Full HD, sin píxeles muertos. Peana ajustable.", price: 95, originalPrice: 140, image: "monitor", category: "Accesorio", status: "Disponible" }
+    { id: 1, title: "iPhone 11 64GB - Reacondicionado", description: "Batería al 100%. Cristal impoluto. Incluye cargador.", price: 299, originalPrice: 350, image: "iphone", categoryId: 1, sku: "IP11-64R", stock: 12, brand: "Apple", status: "Disponible" },
+    { id: 2, title: "Portátil Gaming HP Omen", description: "i7 10th Gen, 16GB RAM, RTX 2060. Perfecto estado.", price: 650, originalPrice: 899, image: "laptop", categoryId: 2, sku: "HP-OMEN-G", stock: 5, brand: "HP", status: "Disponible" },
+    { id: 3, title: "PS4 Slim 500GB + Mando", description: "Limpieza interna recién hecha. Pasta térmica cambiada.", price: 180, originalPrice: 220, image: "console", categoryId: 3, sku: "PS4SLIM", stock: 8, brand: "Sony", status: "Disponible" },
+    { id: 4, title: "Monitor Dell 24' IPS", description: "Full HD, sin píxeles muertos. Peana ajustable.", price: 95, originalPrice: 140, image: "monitor", categoryId: 4, sku: "DELL-M24", stock: 20, brand: "Dell", status: "Disponible" }
 ];
 
 export const mockMessages = [
@@ -100,4 +116,32 @@ export interface Quote {
 export const mockQuotes: Quote[] = [
     { id: 1, name: "Manuel García", email: "manuel@test.com", phone: "600123456", device: "iPad Air 4", description: "Pantalla rota, no funciona el táctil en la esquina superior.", urgency: "Normal", status: "Pendiente", date: "2024-12-20" },
     { id: 2, name: "Sofía Martín", email: "sofia@test.com", phone: "610987654", device: "PC Sobremesa", description: "Hace mucho ruido el ventilador y se apaga solo.", urgency: "Urgente", status: "Contactado", date: "2024-12-19" },
+];
+
+export interface HeroSlide {
+    id: number;
+    title: string;
+    description: string;
+    mediaUrl: string;
+    mediaType: "image" | "video";
+    link?: string;
+}
+
+export const mockHeroSlides: HeroSlide[] = [
+    {
+        id: 1,
+        title: "Promoción Kaspersky",
+        description: "Regalos increíbles por la compra de licencias.",
+        mediaUrl: "/slides/slide1.png",
+        mediaType: "image",
+        link: "#productos"
+    },
+    {
+        id: 2,
+        title: "Balizas de Emergencia V16",
+        description: "Obligatorias en 2026. Consigue la tuya ahora.",
+        mediaUrl: "/slides/slide2.png",
+        mediaType: "image",
+        link: "#productos"
+    }
 ];

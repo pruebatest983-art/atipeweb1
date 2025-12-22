@@ -23,7 +23,7 @@ export function Navbar() {
                 <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
                     <Link href="/" className="transition-colors hover:text-primary">Inicio</Link>
                     <Link href="#servicios" className="transition-colors hover:text-primary">Servicios</Link>
-                    <Link href="#productos" className="transition-colors hover:text-primary">Productos</Link>
+                    <Link href="/shop" className="transition-colors hover:text-primary">Tienda</Link>
                     <Link href="#contacto" className="transition-colors hover:text-primary">Contacto</Link>
                 </nav>
 
@@ -51,7 +51,7 @@ export function Navbar() {
                     <nav className="flex flex-col gap-4 text-sm font-medium">
                         <Link href="/" className="hover:text-primary" onClick={() => setIsOpen(false)}>Inicio</Link>
                         <Link href="#servicios" className="hover:text-primary" onClick={() => setIsOpen(false)}>Servicios</Link>
-                        <Link href="#productos" className="hover:text-primary" onClick={() => setIsOpen(false)}>Productos</Link>
+                        <Link href="/shop" className="hover:text-primary" onClick={() => setIsOpen(false)}>Tienda</Link>
                         <Link href="#contacto" className="hover:text-primary" onClick={() => setIsOpen(false)}>Contacto</Link>
                     </nav>
                     <div className="flex flex-col gap-2 pt-4">

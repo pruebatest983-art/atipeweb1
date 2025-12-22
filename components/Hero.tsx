@@ -7,15 +7,19 @@ export function Hero() {
             <div className="container relative z-10 flex flex-col items-center text-center">
 
                 <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary/10 text-primary hover:bg-primary/20 mb-6">
-                    Servicio Técnico Especializado
+                    Servicio técnico multimarca en Cantabria
                 </div>
 
                 <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight lg:text-7xl mb-6">
-                    Reparamos tu <span className="text-primary">Mundo Digital</span>
+                    ATIPE <span className="text-primary">COMPUTERS</span>
                 </h1>
 
-                <p className="max-w-[700px] text-lg text-muted-foreground mb-8 text-balance">
-                    Expertos en reparación de ordenadores, móviles y consolas. Recuperamos tus datos y le damos una segunda vida a tus dispositivos en tiempo récord.
+                <p className="text-xl md:text-2xl font-bold text-slate-900 mb-4">
+                    Reparación de Ordenadores y Móviles
+                </p>
+
+                <p className="max-w-[800px] text-lg text-muted-foreground mb-8 text-balance">
+                    Especialistas en <strong>Mac, PC, iPhone y Android</strong>. Trabajamos con todas las marcas: <strong>Apple, Samsung, Xiaomi, Huawei, Sony, PlayStation, Nintendo</strong> y más. Diagnóstico gratuito y garantía de 3 meses en todas nuestras reparaciones.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

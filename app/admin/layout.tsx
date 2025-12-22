@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wrench, Users, LayoutDashboard, LogOut, Mail, Package, FileText } from "lucide-react";
+import { Wrench, Users, LayoutDashboard, LogOut, Mail, Package, FileText, Image as ImageIcon } from "lucide-react";
 
 export default function AdminLayout({
     children,
@@ -31,9 +31,13 @@ export default function AdminLayout({
                         <Mail className="h-5 w-5" />
                         <span>Mensajes</span>
                     </Link>
-                    <Link href="/admin/products" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-slate-800 transition-colors">
+                    <Link href="/admin/shop" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-slate-800 transition-colors">
                         <Package className="h-5 w-5" />
-                        <span>Ofertas</span>
+                        <span>Tienda</span>
+                    </Link>
+                    <Link href="/admin/slides" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-slate-800 transition-colors">
+                        <ImageIcon className="h-5 w-5" />
+                        <span>Slideshow</span>
                     </Link>
                     <Link href="/admin/quotes" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-slate-800 transition-colors">
                         <FileText className="h-5 w-5" />
