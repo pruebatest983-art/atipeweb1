@@ -19,7 +19,8 @@ import {
     TrendingUp,
     Layers,
     Search,
-    Filter
+    Filter,
+    Plus
 } from "lucide-react";
 import Papa from "papaparse";
 import { mockProducts, mockCategories, Product, Category } from "@/lib/data";
