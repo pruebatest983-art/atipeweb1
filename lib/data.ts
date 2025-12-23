@@ -55,19 +55,19 @@ export const mockServices = [
 ];
 
 export interface Category {
-    id: number;
+    id: string | number;
     name: string;
     slug: string;
 }
 
 export interface Product {
-    id: number;
+    id: string | number;
     title: string;
     description: string;
     price: number;
     originalPrice?: number;
     image: string;
-    categoryId: number; // reference to Category.id
+    categoryId: string | number; // reference to Category.id
     sku: string;
     stock: number;
     brand?: string;

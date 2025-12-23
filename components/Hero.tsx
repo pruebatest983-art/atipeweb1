@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 // import Image from "next/image"; // Will use if we have an image, for now use placeholders/gradients
 
 export function Hero() {
@@ -23,11 +24,11 @@ export function Hero() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <Button size="lg" className="w-full sm:w-auto text-lg h-12 px-8">
-                        Solicitar Presupuesto Gratis
+                    <Button size="lg" className="w-full sm:w-auto text-lg h-12 px-8" asChild>
+                        <Link href="/quote">Solicitar Presupuesto Gratis</Link>
                     </Button>
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg h-12 px-8">
-                        Ver Servicios
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg h-12 px-8" asChild>
+                        <Link href="#servicios">Ver Servicios</Link>
                     </Button>
                 </div>
 

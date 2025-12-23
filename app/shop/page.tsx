@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,15 +10,60 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Marquee } from "@/components/Marquee";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { mockCategories, mockProducts } from "@/lib/data";
+import { supabase } from "@/lib/supabase";
+import { mockCategories, mockProducts, Product, Category } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 
 export default function ShopPage() {
-    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<string | number | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
+    const [loading, setLoading] = useState(true);
 
-    const filteredProducts = mockProducts
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            try {
+                // Fetch Categories
+                const { data: catData, error: catError } = await supabase
+                    .from('categories')
+                    .select('*');
+
+                if (catError) throw catError;
+                const dbCategories = catData && catData.length > 0 ? catData : mockCategories;
+                setCategories(dbCategories);
+
+                // Fetch Products
+                const { data: prodData, error: prodError } = await supabase
+                    .from('products')
+                    .select('*');
+
+                if (prodError) throw prodError;
+
+                // Priority: Supabase data > Mock data
+                const finalProducts = prodData && prodData.length > 0 ? prodData : mockProducts;
+
+                const mappedProducts = finalProducts.map((p: any) => ({
+                    ...p,
+                    categoryId: p.category_id,
+                }));
+
+                setProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching from Supabase:", error);
+                setProducts(mockProducts);
+                setCategories(mockCategories);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    const filteredProducts = products
         .filter((p) => (selectedCategory ? p.categoryId === selectedCategory : true))
         .filter((p) =>
             p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,7 +85,7 @@ export default function ShopPage() {
                     <header className="mb-12 text-center">
                         <h1 className="text-4xl md:text-5xl font-black uppercase mb-4">Tienda <span className="text-primary">Atipe</span></h1>
                         <p className="text-slate-600 text-lg max-w-2xl mx-auto italic">
-                            "Accesorios, componentes y periféricos con stock real y envío 24h."
+                            "Accesorios, componentes y periféricos con stock real and envío 24h."
                         </p>
                     </header>
 
@@ -53,12 +98,12 @@ export default function ShopPage() {
                                 </h2>
                                 <div className="flex flex-wrap lg:flex-col gap-2">
                                     <button
-                                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedCategory === null ? "bg-primary text-white shadow-md shadow-primary/20" : "bg-slate-50 text-slate-600 hover:bg-slate-100"}`}
+                                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedCategory === null ? "bg-primary text-white shadow-md shadow-primary/20" : "bg-slate-50 text-slate-600 hover:bg-slate-100 text-left"}`}
                                         onClick={() => setSelectedCategory(null)}
                                     >
                                         Todas las categorías
                                     </button>
-                                    {mockCategories.map((cat) => (
+                                    {categories.map((cat) => (
                                         <button
                                             key={cat.id}
                                             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all text-left ${selectedCategory === cat.id ? "bg-primary text-white shadow-md shadow-primary/20" : "bg-slate-50 text-slate-600 hover:bg-slate-100"}`}

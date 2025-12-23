@@ -9,6 +9,7 @@ import { ProductsSection } from "@/components/ProductsSection";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { ClubSection } from "@/components/ClubSection";
 import { ProductSlideshow } from "@/components/ProductSlideshow";
+import { Button } from "@/components/ui/button";
 import { ShoppingBag, Truck, PackageCheck, Zap } from "lucide-react";
 
 export default function Home() {
@@ -71,9 +72,11 @@ export default function Home() {
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
             No pierdas tiempo. Tráelo a Atipe Computers y te daremos una solución rápida y económica.
           </p>
-          <button className="bg-primary text-white font-bold py-3 px-8 rounded-md hover:bg-primary/90 transition-colors">
-            Contactar por WhatsApp
-          </button>
+          <Button size="lg" className="text-lg font-bold py-6 px-10 rounded-xl" asChild>
+            <a href="https://wa.me/34630606016" target="_blank" rel="noopener noreferrer">
+              Contactar por WhatsApp
+            </a>
+          </Button>
         </div>
       </section>
 
