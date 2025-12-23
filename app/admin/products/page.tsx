@@ -1,6 +1,6 @@
 "use client";
 
-import { mockProducts } from "@/lib/data";
+import { mockProducts, mockCategories } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Plus, Package, Edit, Trash2 } from "lucide-react";
@@ -60,7 +60,9 @@ export default function AdminProductsPage() {
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <Badge variant="outline">{product.category}</Badge>
+                                    <Badge variant="outline">
+                                        {mockCategories.find(c => c.id === product.categoryId)?.name || 'Sin categoría'}
+                                    </Badge>
                                 </td>
                                 <td className="px-6 py-4 font-bold text-green-600">
                                     {product.price}€

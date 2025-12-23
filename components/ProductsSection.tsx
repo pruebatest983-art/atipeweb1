@@ -1,6 +1,6 @@
 "use client";
 
-import { mockProducts } from "@/lib/data";
+import { mockProducts, mockCategories } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Smartphone, Laptop, Gamepad, Monitor, Lock } from "lucide-react";
@@ -55,31 +55,34 @@ export function ProductsSection() {
 
                     {/* Blurred Grid Background (Visual Teaser) */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 opacity-30 select-none pointer-events-none filter blur-sm">
-                        {mockProducts.slice(0, 4).map((product) => (
-                            <div key={product.id} className="group relative overflow-hidden rounded-lg border bg-white shadow-sm">
-                                <div className="aspect-square bg-slate-100 flex items-center justify-center relative">
-                                    {getIcon(product.category)}
-                                    {product.originalPrice && (
-                                        <Badge className="absolute top-2 right-2 bg-red-600">
-                                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                                        </Badge>
-                                    )}
-                                </div>
-                                <div className="p-4 space-y-2">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <p className="text-xs text-muted-foreground">{product.category}</p>
-                                            <h3 className="font-semibold text-lg leading-tight">{product.title}</h3>
+                        {mockProducts.slice(0, 4).map((product) => {
+                            const categoryName = mockCategories.find(c => c.id === product.categoryId)?.name || 'Sin categoría';
+                            return (
+                                <div key={product.id} className="group relative overflow-hidden rounded-lg border bg-white shadow-sm">
+                                    <div className="aspect-square bg-slate-100 flex items-center justify-center relative">
+                                        {getIcon(categoryName)}
+                                        {product.originalPrice && (
+                                            <Badge className="absolute top-2 right-2 bg-red-600">
+                                                -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                                            </Badge>
+                                        )}
+                                    </div>
+                                    <div className="p-4 space-y-2">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <p className="text-xs text-muted-foreground">{categoryName}</p>
+                                                <h3 className="font-semibold text-lg leading-tight">{product.title}</h3>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-slate-500 line-clamp-2">Contenido oculto para no registrados...</p>
+                                        <div className="pt-2 flex items-center justify-between">
+                                            <span className="text-xl font-bold text-slate-400">???€</span>
+                                            <Button size="sm" variant="outline" disabled>Reservar</Button>
                                         </div>
                                     </div>
-                                    <p className="text-sm text-slate-500 line-clamp-2">Contenido oculto para no registrados...</p>
-                                    <div className="pt-2 flex items-center justify-between">
-                                        <span className="text-xl font-bold text-slate-400">???€</span>
-                                        <Button size="sm" variant="outline" disabled>Reservar</Button>
-                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 
