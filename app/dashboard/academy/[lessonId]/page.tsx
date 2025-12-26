@@ -1,9 +1,16 @@
-"use client";
 
 import { mockLessons } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
+
+export async function generateStaticParams() {
+    return mockLessons.map((lesson) => ({
+        lessonId: lesson.id,
+    }));
+}
+
+export const dynamicParams = false;
 
 export default function LessonPage({ params }: { params: { lessonId: string } }) {
     const lesson = mockLessons.find(l => l.id === params.lessonId);

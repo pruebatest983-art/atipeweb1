@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { CartProvider } from "@/lib/CartContext";
+import { Toaster } from "@/components/ui/sonner";
+import { CartDrawer } from "@/components/CartDrawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +21,11 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={cn(inter.className, "min-h-screen bg-background antialiased")}>
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+          <Toaster />
+        </CartProvider>
       </body>
     </html>
   );

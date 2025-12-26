@@ -13,6 +13,7 @@ import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { supabase } from "@/lib/supabase";
 import { mockCategories, mockProducts, Product, Category } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/lib/CartContext";
 
 export default function ShopPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -21,6 +22,7 @@ export default function ShopPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "name">("name");
     const [loading, setLoading] = useState(true);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         async function fetchData() {
@@ -175,7 +177,7 @@ export default function ShopPage() {
                                             <Button variant="outline" className="flex-1 rounded-xl h-11 gap-2">
                                                 <Info className="h-4 w-4" /> Detalle
                                             </Button>
-                                            <Button className="flex-1 rounded-xl h-11 gap-2">
+                                            <Button className="flex-1 rounded-xl h-11 gap-2" onClick={() => addToCart(product)}>
                                                 <ShoppingCart className="h-4 w-4" /> Comprar
                                             </Button>
                                         </CardFooter>
