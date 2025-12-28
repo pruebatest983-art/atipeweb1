@@ -12,10 +12,29 @@ export function ContactSection() {
         message: "",
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Mensaje enviado correctamente (Simulación)");
-        setFormData({ name: "", email: "", type: "Contacto", message: "" });
+
+        try {
+            const response = await fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: formData.type === "Sugerencia" ? "sugerencia" : "contact",
+                    data: formData,
+                }),
+            });
+
+            if (response.ok) {
+                alert("Mensaje enviado correctamente.");
+                setFormData({ name: "", email: "", type: "Contacto", message: "" });
+            } else {
+                alert("Hubo un error al enviar el mensaje.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Hubo un error al enviar el mensaje.");
+        }
     };
 
     return (

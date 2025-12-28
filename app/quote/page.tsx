@@ -12,14 +12,41 @@ export default function QuotePage() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        // Simulate API call
-        setTimeout(() => {
+
+        const formData = new FormData(e.currentTarget as HTMLFormElement);
+        const data = {
+            name: formData.get("name"),
+            phone: formData.get("phone"),
+            email: formData.get("email"),
+            device: formData.get("device"),
+            description: formData.get("description"),
+            urgency: formData.get("urgency"),
+        };
+
+        try {
+            const response = await fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: "budget",
+                    data: data,
+                }),
+            });
+
+            if (response.ok) {
+                setIsSubmitted(true);
+            } else {
+                alert("Error al enviar la solicitud. Por favor, inténtalo de nuevo.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error al enviar la solicitud.");
+        } finally {
             setIsLoading(false);
-            setIsSubmitted(true);
-        }, 1500);
+        }
     };
 
     if (isSubmitted) {
@@ -66,27 +93,27 @@ export default function QuotePage() {
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium">Nombre Completo</label>
-                                    <input required placeholder="Ej: Juan Pérez" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                                    <input required name="name" placeholder="Ej: Juan Pérez" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium">Teléfono</label>
-                                    <input required type="tel" placeholder="+34 600 000 000" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                                    <input required name="phone" type="tel" placeholder="+34 600 000 000" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Correo Electrónico</label>
-                                <input required type="email" placeholder="juan@ejemplo.com" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                                <input required name="email" type="email" placeholder="juan@ejemplo.com" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Dispositivo / Modelo</label>
-                                <input required placeholder="Ej: iPhone 13 Pro, Portátil HP Pavilion..." className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                                <input required name="device" placeholder="Ej: iPhone 13 Pro, Portátil HP Pavilion..." className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Descripción del Problema</label>
-                                <textarea required rows={4} placeholder="Describe qué le pasa al dispositivo (pantalla rota, no enciende, va lento...)" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none" />
+                                <textarea required name="description" rows={4} placeholder="Describe qué le pasa al dispositivo (pantalla rota, no enciende, va lento...)" className="w-full p-2.5 rounded-md border text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none" />
                             </div>
 
                             <div className="space-y-2">
