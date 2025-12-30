@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { Wrench, Users, LayoutDashboard, LogOut, Mail, Package, FileText, Image as ImageIcon } from "lucide-react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { logout } from "@/app/actions/auth";
 
-export default function AdminLayout({
+export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("admin_token");
+
+    if (!token) {
+        redirect("/login");
+    }
+
     return (
         <div className="flex h-screen bg-slate-100">
             {/* Sidebar - Dark for Admin */}
@@ -19,7 +29,7 @@ export default function AdminLayout({
                         <LayoutDashboard className="h-5 w-5" />
                         Dashboard
                     </Link>
-                    <Link href="/admin/repairs" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md bg-primary/20 text-primary border border-primary/20">
+                    <Link href="/admin/repairs" className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-slate-800 transition-colors">
                         <Wrench className="h-5 w-5" />
                         Reparaciones
                     </Link>
@@ -46,10 +56,12 @@ export default function AdminLayout({
                 </nav>
 
                 <div className="p-4 border-t border-slate-800">
-                    <Link href="/" className="flex items-center gap-3 px-4 py-3 w-full text-sm font-medium rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
-                        <LogOut className="h-5 w-5" />
-                        Salir
-                    </Link>
+                    <form action={logout}>
+                        <button className="flex items-center gap-3 px-4 py-3 w-full text-sm font-medium rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+                            <LogOut className="h-5 w-5" />
+                            Salir
+                        </button>
+                    </form>
                 </div>
             </aside>
 
